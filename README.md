@@ -8,3 +8,9 @@ It uses [Capstone](https://pypi.org/project/capstone/) and [Colorama](https://py
 
 ```bash
 pip install colorama capstone
+```
+
+## Usage
+
+```bash
+python parse_shn_cheats.py <cheat.shn>
