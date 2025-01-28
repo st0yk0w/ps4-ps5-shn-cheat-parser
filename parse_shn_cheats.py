@@ -202,7 +202,7 @@ def main(filename):
             if all(b == 0 for b in valoff_bytes):
                 # Cave line
                 print(f"Cave Address: {Fore.GREEN}0x{offset_str}{Style.RESET_ALL}")
-                print(f"Cave Length:  {Fore.GREEN}{len(valoff_bytes)}{Style.RESET_ALL}")
+                print(f"Cave Length:  {Fore.GREEN}{len(valoff_bytes)} bytes{Style.RESET_ALL}")
                 print("Cave Code:")
 
                 # Record it's offset in known caves
