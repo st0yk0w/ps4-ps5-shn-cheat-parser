@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-PS4/PS5 .shn Cheat Parser by stoykow
-------------------------------------
+PS4/PS5 .shn Cheat Parser [v0.1] by stoykow
+-------------------------------------------
 
 This script parses a PS4/PS5 .shn cheat XML file and displays it neatly.
 
