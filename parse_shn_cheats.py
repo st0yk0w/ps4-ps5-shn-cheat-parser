@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 """
-PS4/PS5 .shn Cheat Parser [v0.1] by stoykow
+PS4/PS5 .shn Cheat Parser [v0.2] by stoykow
 -------------------------------------------
 
-This script parses a PS4/PS5 .shn cheat XML file and displays it neatly,
-forcing UTF-8 decoding regardless of what the XML itself declares.
+This script parses a PS4/PS5 .shn cheat XML file and displays it neatly
 
 Usage:
     python parse_shn_cheats.py <cheat.shn>
