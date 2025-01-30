@@ -1,4 +1,4 @@
-# PS4/PS5 .shn Cheat Parser [v0.1]
+# PS4/PS5 .shn Cheat Parser
 
 A Python script to parse `.shn` XML files containing PS4/PS5 cheats, and print them neatly.
 
