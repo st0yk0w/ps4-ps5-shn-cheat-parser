@@ -3,7 +3,8 @@
 PS4/PS5 .shn Cheat Parser [v0.1] by stoykow
 -------------------------------------------
 
-This script parses a PS4/PS5 .shn cheat XML file and displays it neatly.
+This script parses a PS4/PS5 .shn cheat XML file and displays it neatly,
+forcing UTF-8 decoding regardless of what the XML itself declares.
 
 Usage:
     python parse_shn_cheats.py <cheat.shn>
@@ -105,11 +106,7 @@ def annotate_cave_jump(mnemonic, operand_str, known_cave_offsets):
         )
     return operand_str
 
-def print_disassembly(
-    code_bytes, 
-    base_addr=0, 
-    known_cave_offsets=None
-):
+def print_disassembly(code_bytes, base_addr=0, known_cave_offsets=None):
     """
     Disassemble 'code_bytes' at 'base_addr'. If a jump/call targets an offset in
     known_cave_offsets, we append "(cave)" in white at the end.
@@ -138,13 +135,23 @@ def print_disassembly(
         )
 
 def main(filename):
+    """
+    Forces UTF-8 parsing: reads the file as UTF-8 text,
+    ignoring whatever encoding is declared in the XML itself.
+    """
     try:
-        tree = ET.parse(filename)
-    except ET.ParseError as e:
-        print(f"{Fore.RED}Error parsing .shn: {e}{Style.RESET_ALL}")
+        with open(filename, "r", encoding="utf-8") as f:
+            data = f.read()
+    except Exception as e:
+        print(f"{Fore.RED}Error reading file as UTF-8: {e}{Style.RESET_ALL}")
         sys.exit(1)
 
-    root = tree.getroot()
+    try:
+        root = ET.fromstring(data)  # parse the text as XML
+        tree = ET.ElementTree(root)
+    except ET.ParseError as e:
+        print(f"{Fore.RED}XML parse error: {e}{Style.RESET_ALL}")
+        sys.exit(1)
 
     game_name = root.get("Game", "Unknown Game")
     version_name = root.get("Version", "Unknown Version")
@@ -205,7 +212,7 @@ def main(filename):
                 print(f"Cave Length:  {Fore.GREEN}{len(valoff_bytes)} bytes{Style.RESET_ALL}")
                 print("Cave Code:")
 
-                # Record it's offset in known caves
+                # Record its offset in known caves
                 known_cave_offsets.add(base_addr)
 
                 # Disassemble ValueOn
@@ -220,8 +227,7 @@ def main(filename):
 
                 print("Modified Code:")
                 print_disassembly(valon_bytes, base_addr=base_addr, known_cave_offsets=known_cave_offsets)
-                print()
-
+                print("---\n")
         print()
 
 if __name__ == "__main__":
